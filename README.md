@@ -75,13 +75,19 @@ Protein_RL_Project/
 | Dataset | Oracle Quality | Spearman ρ |
 |---------|---------------|------------|
 | PITX2_HUMAN | HIGH | 0.689 |
+| CBPA2_HUMAN | HIGH | 0.690 |
 | SRC_HUMAN | MEDIUM | 0.474 |
+| CSN4_MOUSE | MEDIUM | 0.599 |
+| NUSG_MYCTU | MEDIUM | 0.570 |
+| SAV1_MOUSE | MEDIUM | 0.566 |
 | PAI1_HUMAN | LOW | 0.393 |
 | CCR5_HUMAN | LOW | 0.349 |
 | DN7A_SACS2 | LOW | 0.351 |
 | RFAH_ECOLI | LOW | 0.295 |
+| PAI1_HUMAN | LOW | 0.393 |
+| POLG_PESV | LOW | 0.384 |
 
-**Distribution**: 1 HIGH, 1 MEDIUM, 4 LOW
+**Distribution**: 2 HIGH, 4 MEDIUM, 6 LOW
 
 ## Documentation
 
