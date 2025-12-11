@@ -67,7 +67,7 @@ Protein_RL_Project/
 ### 🚧 In Progress
 - [ ] Implement baselines (Random, Greedy, SA)
 - [ ] Implement RL methods (Contextual Bandits, PPO)
-- [ ] Run experiments (400 runs)
+- [ ] Run experiments (600 runs)
 - [ ] Analysis and visualization
 
 ### 📊 Oracle Validation Results
@@ -75,13 +75,13 @@ Protein_RL_Project/
 | Dataset | Oracle Quality | Spearman ρ |
 |---------|---------------|------------|
 | PITX2_HUMAN | HIGH | 0.689 |
+| CBPA2_HUMAN | HIGH | 0.690 |
 | SRC_HUMAN | MEDIUM | 0.474 |
+| SAV1_MOUSE | MEDIUM | 0.566 |
 | PAI1_HUMAN | LOW | 0.393 |
 | CCR5_HUMAN | LOW | 0.349 |
-| DN7A_SACS2 | LOW | 0.351 |
-| RFAH_ECOLI | LOW | 0.295 |
 
-**Distribution**: 1 HIGH, 1 MEDIUM, 4 LOW
+**Distribution**: 2 HIGH, 2 MEDIUM, 2 LOW ✅ **Perfect Balance!**
 
 ## Documentation
 
@@ -106,4 +106,4 @@ Emory University
 
 ---
 
-**Last Updated**: December 7, 2025
+**Last Updated**: December 10, 2025
