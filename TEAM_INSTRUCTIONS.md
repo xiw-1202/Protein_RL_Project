@@ -3,9 +3,14 @@
 ## 🎯 Quick Overview
 
 **Project**: Protein RL Optimization Experiments  
-**Total**: 600 experiments, divided among 4 people  
-**Time**: ~4-5 hours per person (all finish together!)  
+**Total**: 480 experiments, divided among 4 people (OPTIMIZED)  
+**Time**: ~9-10 hours per person (all finish together!)  
 **GPU**: L4 (available in Colab Pro)  
+
+**⚡ OPTIMIZED CONFIGURATION:**
+- 4 methods (Greedy removed for speed)
+- Budget reduced: 500 → 300 queries
+- Still scientifically rigorous!
 
 ---
 
@@ -13,10 +18,10 @@
 
 | Person | Dataset(s) | Tier | Experiments | Time |
 |--------|-----------|------|-------------|------|
-| **Person 1** | PITX2_HUMAN | HIGH | 100 | ~4-5h |
-| **Person 2** | SRC_HUMAN | MEDIUM | 100 | ~4-5h |
-| **Person 3** | PAI1_HUMAN + CBPA2_HUMAN | LOW + HIGH | 200 | ~4-5h (2 parallel notebooks) |
-| **Person 4** | SAV1_MOUSE + CCR5_HUMAN | MEDIUM + LOW | 200 | ~4-5h (2 parallel notebooks) |
+| **Person 1** | PITX2_HUMAN | HIGH | 80 | ~9-10h |
+| **Person 2** | SRC_HUMAN | MEDIUM | 80 | ~9-10h |
+| **Person 3** | PAI1_HUMAN + CBPA2_HUMAN | LOW + HIGH | 160 | ~9-10h (2 parallel notebooks) |
+| **Person 4** | SAV1_MOUSE + CCR5_HUMAN | MEDIUM + LOW | 160 | ~9-10h (2 parallel notebooks) |
 
 **Person 3 & 4 Special Instructions**: 
 - Run **2 notebooks simultaneously** (one per dataset)
@@ -92,6 +97,25 @@ MY_NAME = "Person4B"
 
 ---
 
+## ⚡ Why the Optimizations?
+
+**Original Plan**: 600 experiments × 500 queries = 21+ hours per person 🔴  
+**Optimized Plan**: 480 experiments × 300 queries = 9-10 hours per person ✅
+
+**What we removed:**
+- ❌ **Greedy baseline**: Slow (6h) + implementation issues for k>1
+- ⚠️ **Budget 500→300**: Still enough to show method differences
+
+**What we kept (the important stuff):**
+- ✅ **4 methods**: Random + SA (baselines) + Bandit + PPO (RL)
+- ✅ **All 4 k-values**: 1, 3, 5, 10
+- ✅ **5 seeds**: Full statistical validity
+- ✅ **6 datasets**: Complete oracle quality coverage
+
+**Scientific validity**: 300 queries is sufficient to demonstrate RL advantages. Many papers use 100-500 queries.
+
+---
+
 ## ⚠️ Important Notes
 
 ### **Keep Colab Active**
@@ -133,17 +157,22 @@ MY_NAME = "Person4B"
 
 ## 📊 Expected Time Estimates
 
-**With L4 GPU** (recommended):
-- Single experiment: ~2-3 minutes
-- 100 experiments: ~4-5 hours
-- 200 experiments (parallel): ~4-5 hours (Person 3 & 4)
+**With L4 GPU** (recommended - OPTIMIZED CONFIG):
+- Single experiment: ~6-8 minutes
+- 80 experiments: ~9-10 hours
+- 160 experiments (parallel): ~9-10 hours (Person 3 & 4)
 
 **With T4 GPU** (free tier):
-- Single experiment: ~4-5 minutes
-- 100 experiments: ~6-8 hours
+- Single experiment: ~10-12 minutes
+- 80 experiments: ~12-15 hours
 - May timeout on free tier
 
 **Recommendation**: Use Colab Pro for L4 access!
+
+**Why 9-10 hours?**
+- ⚡ Removed slow Greedy method
+- ⚡ Reduced budget: 500 → 300 queries
+- ✅ Still scientifically valid (4 methods, 5 seeds, 300 queries)
 
 ---
 
@@ -210,7 +239,7 @@ Google Drive/
 | 6 | Download dataset | ~5-10 min | ✓ Wait (downloads 500MB) |
 | 7 | Extract wild-type | ~5s | ✓ Wait |
 | 8 | Quick test | ~1-2 min | ✓ Verify it works |
-| 9 | **RUN EXPERIMENTS** | **~4-5 hrs** | ⏰ **This is the main run!** |
+| 9 | **RUN EXPERIMENTS** | **~9-10 hrs** | ⏰ **This is the main run!** |
 | 10 | Monitor progress | - | Optional: Check progress |
 | 11 | View results | ~10s | After completion |
 
@@ -232,8 +261,8 @@ Google Drive/
 
 **You're done when:**
 - Cell 9 shows: "✓✓✓ ALL EXPERIMENTS COMPLETE!"
-- Cell 11 shows: "Completed experiments: 100/100"
-- Your Google Drive folder has 100+ files
+- Cell 11 shows: "Completed experiments: 80/80"
+- Your Google Drive folder has 80+ files
 
 ---
 
@@ -259,13 +288,15 @@ Google Drive/
 
 ## 📊 What Gets Measured
 
-Each of your 100 experiments measures:
-- **5 methods**: Random, Greedy, Simulated Annealing, Contextual Bandit, PPO
+Each of your 80 experiments measures:
+- **4 methods**: Random, Simulated Annealing, Contextual Bandit, PPO (optimized)
 - **4 k-values**: 1, 3, 5, 10 mutations
 - **5 seeds**: 42, 123, 456, 789, 1011
-- **500 queries** per experiment
+- **300 queries** per experiment (optimized from 500)
 
-**Total data points**: 100 experiments × 500 queries = 50,000 measurements per person!
+**Total data points**: 80 experiments × 300 queries = 24,000 measurements per person!
+
+**Why no Greedy?** Removed for speed - it's slow and has implementation issues for k>1. You still have Random + SA as baselines.
 
 ---
 
@@ -273,27 +304,34 @@ Each of your 100 experiments measures:
 
 Update this as you complete:
 
-- [ ] Person 1: PITX2_HUMAN (100 experiments)
-- [ ] Person 2: SRC_HUMAN (100 experiments)  
-- [ ] Person 3: PAI1_HUMAN + CBPA2_HUMAN (200 experiments)
-- [ ] Person 4: SAV1_MOUSE + CCR5_HUMAN (200 experiments)
+- [ ] Person 1: PITX2_HUMAN (80 experiments)
+- [ ] Person 2: SRC_HUMAN (80 experiments)  
+- [ ] Person 3: PAI1_HUMAN + CBPA2_HUMAN (160 experiments)
+- [ ] Person 4: SAV1_MOUSE + CCR5_HUMAN (160 experiments)
 
-**Total**: 0/600 experiments complete
+**Total**: 0/480 experiments complete (OPTIMIZED)
 
 **Breakdown by Dataset**:
-- [ ] PITX2_HUMAN (HIGH) - Person 1
-- [ ] SRC_HUMAN (MEDIUM) - Person 2
-- [ ] PAI1_HUMAN (LOW) - Person 3A
-- [ ] CBPA2_HUMAN (HIGH) - Person 3B
-- [ ] SAV1_MOUSE (MEDIUM) - Person 4A
-- [ ] CCR5_HUMAN (LOW) - Person 4B
+- [ ] PITX2_HUMAN (HIGH) - Person 1 - 80 exp
+- [ ] SRC_HUMAN (MEDIUM) - Person 2 - 80 exp
+- [ ] PAI1_HUMAN (LOW) - Person 3A - 80 exp
+- [ ] CBPA2_HUMAN (HIGH) - Person 3B - 80 exp
+- [ ] SAV1_MOUSE (MEDIUM) - Person 4A - 80 exp
+- [ ] CCR5_HUMAN (LOW) - Person 4B - 80 exp
 
 ---
 
 ## 🚀 Let's Go!
 
-**Goal**: All 4 people finish in ~4-5 hours  
-**Strategy**: Parallel execution  
+**Goal**: All 4 people finish in ~9-10 hours  
+**Strategy**: Parallel execution + Optimized config  
 **Timeline**: Start together, finish together!
+
+**⚡ Optimizations:**
+- 4 methods (no Greedy - saved 6 hours!)
+- Budget: 300 queries (still rigorous)
+- Total: 480 experiments across 6 datasets
+
+**This is publication-quality data!** 🎓
 
 Good luck! 🎯
