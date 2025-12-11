@@ -15,14 +15,14 @@
 |--------|-----------|------|-------------|------|
 | **Person 1** | PITX2_HUMAN | HIGH | 100 | ~4-5h |
 | **Person 2** | SRC_HUMAN | MEDIUM | 100 | ~4-5h |
-| **Person 3** | PAI1_HUMAN | LOW | 100 | ~4-5h |
-| **Person 4** | CBPA2_HUMAN + SAV1_MOUSE + CCR5_HUMAN | HIGH + MEDIUM + LOW | 300 | ~4-5h (3 parallel notebooks) |
+| **Person 3** | PAI1_HUMAN + CBPA2_HUMAN | LOW + HIGH | 200 | ~4-5h (2 parallel notebooks) |
+| **Person 4** | SAV1_MOUSE + CCR5_HUMAN | MEDIUM + LOW | 200 | ~4-5h (2 parallel notebooks) |
 
-**Person 4 Special Instructions**: 
-- Run **3 notebooks simultaneously** (one per dataset)
-- Open 3 browser tabs with the same Colab notebook
+**Person 3 & 4 Special Instructions**: 
+- Run **2 notebooks simultaneously** (one per dataset)
+- Open 2 browser tabs with the same Colab notebook
 - Configure each tab with a different dataset
-- All 3 will run in parallel on the same Colab account
+- Both will run in parallel on the same Colab account
 
 ---
 
@@ -58,28 +58,28 @@ MY_DATASET = "SRC_HUMAN_Ahler_2019"
 MY_NAME = "Person2"
 ```
 
-**Person 3**:
+**Person 3 - Notebook A** (Tab 1):
 ```python
 MY_DATASET = "PAI1_HUMAN_Huttinger_2021"
-MY_NAME = "Person3"
+MY_NAME = "Person3A"
+```
+
+**Person 3 - Notebook B** (Tab 2):
+```python
+MY_DATASET = "CBPA2_HUMAN_Tsuboyama_2023_1O6X"
+MY_NAME = "Person3B"
 ```
 
 **Person 4 - Notebook A** (Tab 1):
 ```python
-MY_DATASET = "CBPA2_HUMAN_Tsuboyama_2023_1O6X"
+MY_DATASET = "SAV1_MOUSE_Tsuboyama_2023_2YSB"
 MY_NAME = "Person4A"
 ```
 
 **Person 4 - Notebook B** (Tab 2):
 ```python
-MY_DATASET = "SAV1_MOUSE_Tsuboyama_2023_2YSB"
-MY_NAME = "Person4B"
-```
-
-**Person 4 - Notebook C** (Tab 3):
-```python
 MY_DATASET = "CCR5_HUMAN_Gill_2023"
-MY_NAME = "Person4C"
+MY_NAME = "Person4B"
 ```
 
 ### **Step 4: Run All Cells**
@@ -109,15 +109,25 @@ MY_NAME = "Person4C"
 - Run **Cell 10** anytime to see progress
 - Check your Google Drive folder for saved results
 
-### **Person 4 - Running 3 Notebooks**
+### **Person 3 & 4 - Running 2 Notebooks Each**
+
+**Person 3**:
 1. Open the Colab link
-2. Make a copy: "Person4A"
-3. In a new tab, open the link again
-4. Make another copy: "Person4B"
-5. In another new tab, open the link again
-6. Make another copy: "Person4C"
-7. Configure each with different dataset
-8. Run all three simultaneously!
+2. Make a copy: "Person3A_PAI1"
+3. Configure: `MY_DATASET = "PAI1_HUMAN_Huttinger_2021"`, `MY_NAME = "Person3A"`
+4. In a new tab, open the link again
+5. Make another copy: "Person3B_CBPA2"
+6. Configure: `MY_DATASET = "CBPA2_HUMAN_Tsuboyama_2023_1O6X"`, `MY_NAME = "Person3B"`
+7. Run both simultaneously!
+
+**Person 4**:
+1. Open the Colab link
+2. Make a copy: "Person4A_SAV1"
+3. Configure: `MY_DATASET = "SAV1_MOUSE_Tsuboyama_2023_2YSB"`, `MY_NAME = "Person4A"`
+4. In a new tab, open the link again
+5. Make another copy: "Person4B_CCR5"
+6. Configure: `MY_DATASET = "CCR5_HUMAN_Gill_2023"`, `MY_NAME = "Person4B"`
+7. Run both simultaneously!
 
 ---
 
@@ -126,7 +136,7 @@ MY_NAME = "Person4C"
 **With L4 GPU** (recommended):
 - Single experiment: ~2-3 minutes
 - 100 experiments: ~4-5 hours
-- Person 4 (300 experiments, parallel): ~4-5 hours
+- 200 experiments (parallel): ~4-5 hours (Person 3 & 4)
 
 **With T4 GPU** (free tier):
 - Single experiment: ~4-5 minutes
@@ -150,13 +160,13 @@ Google Drive/
     │   └── ... (100 files)
     ├── Person2_SRC/
     │   └── ... (100 files)
-    ├── Person3_PAI1/
+    ├── Person3A_PAI1/
     │   └── ... (100 files)
-    ├── Person4A_CBPA2/
+    ├── Person3B_CBPA2/
     │   └── ... (100 files)
-    ├── Person4B_SAV1/
+    ├── Person4A_SAV1/
     │   └── ... (100 files)
-    └── Person4C_CCR5/
+    └── Person4B_CCR5/
         └── ... (100 files)
 ```
 
@@ -265,10 +275,18 @@ Update this as you complete:
 
 - [ ] Person 1: PITX2_HUMAN (100 experiments)
 - [ ] Person 2: SRC_HUMAN (100 experiments)  
-- [ ] Person 3: PAI1_HUMAN (100 experiments)
-- [ ] Person 4: CBPA2_HUMAN + SAV1_MOUSE + CCR5_HUMAN (300 experiments)
+- [ ] Person 3: PAI1_HUMAN + CBPA2_HUMAN (200 experiments)
+- [ ] Person 4: SAV1_MOUSE + CCR5_HUMAN (200 experiments)
 
 **Total**: 0/600 experiments complete
+
+**Breakdown by Dataset**:
+- [ ] PITX2_HUMAN (HIGH) - Person 1
+- [ ] SRC_HUMAN (MEDIUM) - Person 2
+- [ ] PAI1_HUMAN (LOW) - Person 3A
+- [ ] CBPA2_HUMAN (HIGH) - Person 3B
+- [ ] SAV1_MOUSE (MEDIUM) - Person 4A
+- [ ] CCR5_HUMAN (LOW) - Person 4B
 
 ---
 
