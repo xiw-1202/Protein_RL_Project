@@ -51,7 +51,6 @@ venv.bak/
 .LSOverride
 
 # Project specific
-NEXT_STEPS.md
 colab_data.zip
 experiments/oracle_validation/
 
