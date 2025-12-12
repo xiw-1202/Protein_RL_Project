@@ -38,19 +38,19 @@ class ContextualBandit:
         self.alpha_prior = alpha_prior
         self.beta_prior = beta_prior
 
-    def select_mutation(self, current_seq, current_fitness):
+    def select_mutations(self, current_seq, current_fitness):
         """
-        Select mutation using Thompson Sampling
+        Select k mutations using Thompson Sampling
 
         Samples success probability for each position from Beta distribution
-        Picks position with highest sampled probability
+        Picks k positions with highest sampled probabilities
 
         Args:
             current_seq: Current sequence
             current_fitness: Current fitness
 
         Returns:
-            (position, from_aa, to_aa) mutation
+            List of (position, from_aa, to_aa) mutations
         """
         from src.utils.mutations import AMINO_ACIDS
 
@@ -69,36 +69,33 @@ class ContextualBandit:
         # Sort positions by sampled probability
         position_scores.sort(reverse=True)
 
-        # Try top positions until we find valid mutation
-        for _, pos in position_scores[:10]:  # Try top 10
+        # Select top k positions
+        mutations = []
+        for _, pos in position_scores[:self.k]:
             wt_aa = current_seq[pos]
 
             # Pick random different amino acid
             possible_aas = [aa for aa in AMINO_ACIDS if aa != wt_aa]
             to_aa = self.rng.choice(possible_aas)
 
-            return (pos, wt_aa, to_aa)
+            mutations.append((pos, wt_aa, to_aa))
 
-        # Fallback: random mutation
-        pos = self.rng.randint(len(current_seq))
-        wt_aa = current_seq[pos]
-        possible_aas = [aa for aa in AMINO_ACIDS if aa != wt_aa]
-        to_aa = self.rng.choice(possible_aas)
+        return mutations
 
-        return (pos, wt_aa, to_aa)
-
-    def update(self, position, improved):
+    def update(self, mutations, improved):
         """
-        Update Beta distribution for a position
+        Update Beta distributions for mutated positions
 
         Args:
-            position: Mutated position
-            improved: Whether mutation improved fitness
+            mutations: List of (position, from_aa, to_aa) mutations
+            improved: Whether mutations improved fitness
         """
-        if improved:
-            self.alpha[position] += 1
-        else:
-            self.beta[position] += 1
+        for mutation in mutations:
+            pos = mutation[0]
+            if improved:
+                self.alpha[pos] += 1
+            else:
+                self.beta[pos] += 1
 
     def optimize(self, wt_sequence, budget=500):
         """
@@ -134,13 +131,15 @@ class ContextualBandit:
 
         # Optimization loop
         for i in range(budget - 1):
-            # Select mutation using Thompson Sampling
-            mutation = self.select_mutation(current_seq, current_fitness)
-            pos, from_aa, to_aa = mutation
+            # Select k mutations using Thompson Sampling
+            mutations = self.select_mutations(current_seq, current_fitness)
 
-            # Apply mutation
-            mutant_seq = apply_mutations(current_seq, [mutation])
-            mutation_desc = f"{from_aa}{pos+1}{to_aa}"
+            # Apply mutations
+            mutant_seq = apply_mutations(current_seq, mutations)
+            
+            # Create mutation description
+            mutation_strs = [f"{m[1]}{m[0]+1}{m[2]}" for m in mutations]
+            mutation_desc = ":".join(mutation_strs)
 
             # Score mutant
             mutant_fitness = self.oracle.score_sequence(mutant_seq)
@@ -151,8 +150,8 @@ class ContextualBandit:
             # Check if improved
             improved = mutant_fitness > current_fitness
 
-            # Update Thompson Sampling statistics
-            self.update(pos, improved)
+            # Update Thompson Sampling statistics for all mutated positions
+            self.update(mutations, improved)
 
             # Accept if improved
             if improved:
