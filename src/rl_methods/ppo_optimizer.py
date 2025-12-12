@@ -177,12 +177,13 @@ class PPOOptimizer:
         log_probs_list = []
 
         for _ in range(self.k):
-            # Create masked probabilities (zero out already selected)
-            masked_probs = policy_probs.clone()
+            # Create mask for already-selected positions (avoid in-place ops)
+            mask = torch.ones_like(policy_probs)
             for pos in selected_positions:
-                masked_probs[pos] = 0.0
-
-            # Renormalize
+                mask[pos] = 0.0
+            
+            # Apply mask and renormalize
+            masked_probs = policy_probs * mask
             masked_probs = masked_probs / masked_probs.sum()
 
             # Sample position
@@ -258,14 +259,15 @@ class PPOOptimizer:
 
                 # Compute log prob for this sequence of k positions
                 total_log_prob = 0.0
-                masked_probs = policy_probs.clone()
 
-                for pos in positions:
-                    # Mask previously selected positions
-                    for prev_pos in positions[: positions.index(pos)]:
-                        masked_probs[prev_pos] = 0.0
-
-                    # Renormalize
+                for j, pos in enumerate(positions):
+                    # Create mask for already-selected positions (avoid in-place ops)
+                    mask = torch.ones_like(policy_probs)
+                    for prev_idx in range(j):
+                        mask[positions[prev_idx]] = 0.0
+                    
+                    # Apply mask and renormalize
+                    masked_probs = policy_probs * mask
                     masked_probs_norm = masked_probs / masked_probs.sum()
 
                     # Get log prob for this position
