@@ -61,6 +61,9 @@ class GreedyBaseline:
 
         step = 0
 
+        # MODIFIED: Sample neighbors instead of scoring all
+        max_neighbors = 500  # Maximum neighbors to check per step
+
         while queries_used < budget:
             step += 1
 

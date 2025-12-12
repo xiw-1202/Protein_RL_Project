@@ -96,6 +96,7 @@ class PPOOptimizer:
         # Set seeds
         np.random.seed(seed)
         torch.manual_seed(seed)
+        self.rng = np.random.RandomState(seed)
 
         # PPO hyperparameters
         self.gamma = gamma
@@ -147,15 +148,17 @@ class PPOOptimizer:
             self.optimizer = optim.Adam(self.network.parameters(), lr=self.lr)
             print(f"  Initialized PPO network (seq_length={seq_length})")
 
-    def select_action(self, sequence):
+    def select_actions(self, sequence):
         """
-        Select mutation position using policy network
+        Select k mutation positions using policy network
 
         Args:
             sequence: Current sequence
 
         Returns:
-            (position, from_aa, to_aa), log_prob, value
+            mutations: List of (position, from_aa, to_aa)
+            log_probs: List of log probabilities for each position
+            value: Estimated value
         """
         from src.utils.mutations import AMINO_ACIDS
 
@@ -166,23 +169,47 @@ class PPOOptimizer:
         with torch.no_grad():
             policy_logits, value = self.network(state)
 
-        # Sample position from policy
-        policy_probs = torch.softmax(policy_logits, dim=-1)
-        position_dist = torch.distributions.Categorical(policy_probs)
-        position = position_dist.sample().item()
-        log_prob = position_dist.log_prob(torch.tensor(position)).item()
+        # Sample k positions from policy (without replacement)
+        policy_probs = torch.softmax(policy_logits, dim=-1).squeeze()
 
-        # Select random amino acid at that position
-        wt_aa = sequence[position]
-        possible_aas = [aa for aa in AMINO_ACIDS if aa != wt_aa]
-        to_aa = np.random.choice(possible_aas)
+        # Sample k positions without replacement
+        selected_positions = []
+        log_probs_list = []
 
-        return (position, wt_aa, to_aa), log_prob, value.item()
+        for _ in range(self.k):
+            # Create masked probabilities (zero out already selected)
+            masked_probs = policy_probs.clone()
+            for pos in selected_positions:
+                masked_probs[pos] = 0.0
 
-    def store_transition(self, state, action, reward, log_prob, value):
+            # Renormalize
+            masked_probs = masked_probs / masked_probs.sum()
+
+            # Sample position
+            position_dist = torch.distributions.Categorical(masked_probs)
+            position = position_dist.sample().item()
+            log_prob = position_dist.log_prob(torch.tensor(position)).item()
+
+            selected_positions.append(position)
+            log_probs_list.append(log_prob)
+
+        # Create mutations for selected positions
+        mutations = []
+        for position in selected_positions:
+            wt_aa = sequence[position]
+            possible_aas = [aa for aa in AMINO_ACIDS if aa != wt_aa]
+            to_aa = self.rng.choice(possible_aas)
+            mutations.append((position, wt_aa, to_aa))
+
+        # Sum log probs (since positions are independent)
+        total_log_prob = sum(log_probs_list)
+
+        return mutations, total_log_prob, value.item()
+
+    def store_transition(self, state, actions, reward, log_prob, value):
         """Store experience"""
         self.states.append(state)
-        self.actions.append(action)
+        self.actions.append(actions)
         self.rewards.append(reward)
         self.log_probs.append(log_prob)
         self.values.append(value)
@@ -213,16 +240,41 @@ class PPOOptimizer:
         states = torch.stack([self._encode_sequence(s) for s in self.states])
         old_log_probs = torch.FloatTensor(self.log_probs)
 
+        # Get positions from actions (first element of each mutation tuple)
+        all_positions = []
+        for actions in self.actions:
+            positions = [a[0] for a in actions]
+            all_positions.append(positions)
+
         # PPO update
         for _ in range(self.update_epochs):
             # Forward pass
             policy_logits, values_pred = self.network(states)
 
             # Reconstruct log probs for selected actions
-            positions = torch.LongTensor([a[0] for a in self.actions])
-            policy_probs = torch.softmax(policy_logits, dim=-1)
-            position_dists = torch.distributions.Categorical(policy_probs)
-            new_log_probs = position_dists.log_prob(positions)
+            new_log_probs_list = []
+            for i, positions in enumerate(all_positions):
+                policy_probs = torch.softmax(policy_logits[i], dim=-1)
+
+                # Compute log prob for this sequence of k positions
+                total_log_prob = 0.0
+                masked_probs = policy_probs.clone()
+
+                for pos in positions:
+                    # Mask previously selected positions
+                    for prev_pos in positions[: positions.index(pos)]:
+                        masked_probs[prev_pos] = 0.0
+
+                    # Renormalize
+                    masked_probs_norm = masked_probs / masked_probs.sum()
+
+                    # Get log prob for this position
+                    position_dist = torch.distributions.Categorical(masked_probs_norm)
+                    total_log_prob += position_dist.log_prob(torch.tensor(pos))
+
+                new_log_probs_list.append(total_log_prob)
+
+            new_log_probs = torch.stack(new_log_probs_list)
 
             # PPO objective
             ratio = torch.exp(new_log_probs - old_log_probs)
@@ -288,13 +340,15 @@ class PPOOptimizer:
 
         # Optimization loop
         for i in range(budget - 1):
-            # Select action
-            mutation, log_prob, value = self.select_action(current_seq)
-            pos, from_aa, to_aa = mutation
+            # Select k actions
+            mutations, log_prob, value = self.select_actions(current_seq)
 
-            # Apply mutation
-            mutant_seq = apply_mutations(current_seq, [mutation])
-            mutation_desc = f"{from_aa}{pos+1}{to_aa}"
+            # Apply mutations
+            mutant_seq = apply_mutations(current_seq, mutations)
+
+            # Create mutation description
+            mutation_strs = [f"{m[1]}{m[0]+1}{m[2]}" for m in mutations]
+            mutation_desc = ":".join(mutation_strs)
 
             # Score mutant
             mutant_fitness = self.oracle.score_sequence(mutant_seq)
@@ -306,7 +360,7 @@ class PPOOptimizer:
             reward = mutant_fitness - current_fitness
 
             # Store transition
-            self.store_transition(current_seq, mutation, reward, log_prob, value)
+            self.store_transition(current_seq, mutations, reward, log_prob, value)
 
             # Accept if improved
             improved = mutant_fitness > current_fitness
