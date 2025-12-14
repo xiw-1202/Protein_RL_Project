@@ -1,6 +1,12 @@
 """
 Run full experiments across all datasets, methods, seeds, and k-values
 Saves results incrementally to avoid data loss
+
+UPDATED: Now includes improved RL methods:
+- ppo_v2: PPO with ESM-2 embeddings + entropy bonus
+- ucb: UCB bandit (standard)
+- ucb1: UCB1 bandit (c=sqrt(2))
+- ucb_tuned: UCB-Tuned bandit (variance-based)
 """
 
 import sys
@@ -11,8 +17,18 @@ from src.models.esm_oracle import ESM2Oracle
 from src.baselines.random_baseline import RandomBaseline
 from src.baselines.greedy_baseline import GreedyBaseline
 from src.baselines.simulated_annealing import SimulatedAnnealingBaseline
+
+# Original RL methods
 from src.rl_methods.contextual_bandit import ContextualBandit
 from src.rl_methods.ppo_optimizer import PPOOptimizer
+
+# Improved RL methods
+from src.rl_methods.ppo_optimizer_v2 import PPOOptimizerV2
+from src.rl_methods.contextual_bandit_ucb import (
+    ContextualBanditUCB,
+    ContextualBanditUCB1,
+    ContextualBanditUCBTuned,
+)
 
 from pathlib import Path
 import pandas as pd
@@ -40,19 +56,46 @@ def load_datasets():
 
 
 def get_method(method_name, oracle, k, seed):
-    """Get method instance"""
+    """
+    Get method instance
+    
+    Available methods:
+    - Baselines: random, greedy, sa
+    - Original RL: bandit (Thompson Sampling), ppo (PPO v1)
+    - Improved RL: ppo_v2, ucb, ucb1, ucb_tuned
+    """
+    # Baselines
     if method_name == "random":
         return RandomBaseline(oracle, k=k, seed=seed)
     elif method_name == "greedy":
         return GreedyBaseline(oracle, k=k)
     elif method_name == "sa":
         return SimulatedAnnealingBaseline(oracle, k=k, seed=seed)
+    
+    # Original RL methods
     elif method_name == "bandit":
         return ContextualBandit(oracle, k=k, seed=seed)
     elif method_name == "ppo":
         return PPOOptimizer(oracle, k=k, seed=seed)
+    
+    # Improved RL methods
+    elif method_name == "ppo_v2":
+        return PPOOptimizerV2(oracle, k=k, seed=seed, entropy_coef=0.01)
+    elif method_name == "ucb":
+        return ContextualBanditUCB(oracle, k=k, seed=seed, ucb_c=2.0)
+    elif method_name == "ucb1":
+        return ContextualBanditUCB1(oracle, k=k, seed=seed)
+    elif method_name == "ucb_tuned":
+        return ContextualBanditUCBTuned(oracle, k=k, seed=seed)
+    
     else:
-        raise ValueError(f"Unknown method: {method_name}")
+        raise ValueError(
+            f"Unknown method: {method_name}\n"
+            f"Available methods:\n"
+            f"  Baselines: random, greedy, sa\n"
+            f"  Original RL: bandit, ppo\n"
+            f"  Improved RL: ppo_v2, ucb, ucb1, ucb_tuned"
+        )
 
 
 def run_single_experiment(dataset_id, method_name, k, seed, budget, model_name, device):
@@ -250,12 +293,45 @@ def run_experiments(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Run protein optimization experiments")
+    parser = argparse.ArgumentParser(
+        description="Run protein optimization experiments",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Available Methods:
+  Baselines:
+    random              Random mutation selection
+    greedy              Greedy hill climbing (not recommended for k>1)
+    sa                  Simulated annealing
+    
+  Original RL:
+    bandit              Contextual bandit with Thompson Sampling
+    ppo                 PPO v1 (one-hot encoding)
+    
+  Improved RL (NEW):
+    ppo_v2              PPO v2 (ESM-2 embeddings + entropy + learned AA)
+    ucb                 UCB bandit (c=2.0, deterministic)
+    ucb1                UCB1 bandit (c=sqrt(2), classic variant)
+    ucb_tuned           UCB-Tuned (variance-based exploration)
+
+Examples:
+  # Run all original methods
+  python run_experiments.py --methods random sa bandit ppo
+  
+  # Compare PPO v1 vs v2
+  python run_experiments.py --methods ppo ppo_v2 --datasets SAV1_MOUSE
+  
+  # Test improved bandits
+  python run_experiments.py --methods bandit ucb ucb1 --k_values 1 3
+  
+  # Quick test on one dataset
+  python run_experiments.py --methods ppo_v2 --datasets SAV1_MOUSE --k_values 1 --seeds 42 --budget 100
+        """
+    )
     parser.add_argument(
         "--methods",
         nargs="+",
-        default=["random", "greedy", "sa", "bandit", "ppo"],
-        help="Methods to run",
+        default=["random", "sa", "bandit", "ppo"],
+        help="Methods to run (default: random sa bandit ppo)",
     )
     parser.add_argument(
         "--datasets",
@@ -268,24 +344,35 @@ if __name__ == "__main__":
         nargs="+",
         type=int,
         default=[1, 3, 5, 10],
-        help="k-values for mutations",
+        help="k-values for mutations (default: 1 3 5 10)",
     )
     parser.add_argument(
         "--seeds",
         nargs="+",
         type=int,
         default=[42, 123, 456, 789, 1011],
-        help="Random seeds",
+        help="Random seeds (default: 42 123 456 789 1011)",
     )
     parser.add_argument(
-        "--budget", type=int, default=500, help="Oracle query budget per experiment"
+        "--budget", 
+        type=int, 
+        default=300, 
+        help="Oracle query budget per experiment (default: 300)"
     )
     parser.add_argument(
-        "--model", default="esm2_t33_650M_UR50D", help="ESM-2 model name"
+        "--model", 
+        default="esm2_t33_650M_UR50D", 
+        help="ESM-2 model name (default: esm2_t33_650M_UR50D)"
     )
-    parser.add_argument("--device", default="auto", help="Device (auto, cuda, cpu)")
     parser.add_argument(
-        "--output", default="experiments/results", help="Output directory"
+        "--device", 
+        default="auto", 
+        help="Device (auto, cuda, mps, cpu) (default: auto)"
+    )
+    parser.add_argument(
+        "--output", 
+        default="experiments/results", 
+        help="Output directory (default: experiments/results)"
     )
     parser.add_argument(
         "--resume",
