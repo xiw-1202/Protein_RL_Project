@@ -445,7 +445,7 @@ MIT License - see LICENSE file for details
 ## Acknowledgments
 
 - **Course**: CS557 Artificial Intelligence, Emory University
-- **Instructor**: [Instructor Name]
+- **Instructor**: Eugene Agichtein
 - **Resources**: Google Colab Pro, ProteinGym, ESM-2 (Facebook Research)
 - **Compute**: NVIDIA L4 GPUs via Google Colab Pro
 
@@ -454,7 +454,7 @@ MIT License - see LICENSE file for details
 ## Contact
 
 **Project Team**:
-- Xiaofei Wang (Lead)
+- Xiaofei Wang
 - Julie Li
 - Zechary Chou
 - Seongmin Oh
