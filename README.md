@@ -461,7 +461,7 @@ MIT License - see LICENSE file for details
 
 **Institution**: Emory University
 **Course**: CS557 - Artificial Intelligence
-**Semester**: Fall 2024
+**Semester**: Fall 2024/Spring 2025
 
 ---
 
