@@ -1,0 +1,17 @@
+{
+  "method": "ppo_v2",
+  "k": 5,
+  "best_sequence": "GADLPSSPASVDWTMRGRKYYIDHNTNTTHWSHPLEAGPSSG",
+  "best_fitness": -86.76697681285441,
+  "wt_fitness": -87.4995311461389,
+  "improvement": 0.7325543332844973,
+  "queries_used": 300,
+  "improvements": 1,
+  "updates": 9,
+  "dataset_id": "SAV1_MOUSE",
+  "seed": 123,
+  "budget": 300,
+  "model_name": "esm2_t33_650M_UR50D",
+  "runtime": 391.85132098197937,
+  "timestamp": "2025-12-14T18:20:28.613159"
+}

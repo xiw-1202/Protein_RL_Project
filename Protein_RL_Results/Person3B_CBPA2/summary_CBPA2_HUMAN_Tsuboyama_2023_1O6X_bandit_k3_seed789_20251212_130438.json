@@ -1,0 +1,16 @@
+{
+  "method": "bandit",
+  "k": 3,
+  "best_sequence": "VGDQVLEIVPSNEEQIKNLLQLECQEHLQLDFWKSPTTPGATAHVRVPQVNVQAVKVFLESQGIASSIMIED",
+  "best_fitness": -111.34750231634825,
+  "wt_fitness": -115.18333279015496,
+  "improvement": 3.835830473806709,
+  "queries_used": 300,
+  "improvements": 1,
+  "dataset_id": "CBPA2_HUMAN_Tsuboyama_2023_1O6X",
+  "seed": 789,
+  "budget": 300,
+  "model_name": "esm2_t33_650M_UR50D",
+  "runtime": 23518.165039539337,
+  "timestamp": "2025-12-12T13:04:38.453209"
+}

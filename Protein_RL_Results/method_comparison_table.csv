@@ -1,0 +1,8 @@
+Method,Category,Mean (k=1),Std (k=1)
+RANDOM,Baseline,18.8898,4.7008
+SA,Baseline,0.6071,0.9581
+BANDIT,Original RL,30.0691,4.6752
+PPO v1,Original RL,26.446,2.7984
+PPO v2,Improved RL,10.2503,2.5862
+UCB1,Improved RL,30.2928,9.5676
+UCB-Tuned,Improved RL,28.2974,2.9365

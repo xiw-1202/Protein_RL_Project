@@ -1,0 +1,282 @@
+[
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 1,
+    "seed": 42,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 1,
+    "seed": 123,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 1,
+    "seed": 456,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 1,
+    "seed": 789,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 1,
+    "seed": 1011,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 3,
+    "seed": 42,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 3,
+    "seed": 123,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 3,
+    "seed": 456,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 3,
+    "seed": 789,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 3,
+    "seed": 1011,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 5,
+    "seed": 42,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 5,
+    "seed": 123,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 5,
+    "seed": 456,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 5,
+    "seed": 789,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 5,
+    "seed": 1011,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 10,
+    "seed": 42,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 10,
+    "seed": 123,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 10,
+    "seed": 456,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 10,
+    "seed": 789,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb1",
+    "k": 10,
+    "seed": 1011,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 1,
+    "seed": 42,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 1,
+    "seed": 123,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 1,
+    "seed": 456,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 1,
+    "seed": 789,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 1,
+    "seed": 1011,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 3,
+    "seed": 42,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 3,
+    "seed": 123,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 3,
+    "seed": 456,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 3,
+    "seed": 789,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 3,
+    "seed": 1011,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 5,
+    "seed": 42,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 5,
+    "seed": 123,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 5,
+    "seed": 456,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 5,
+    "seed": 789,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 5,
+    "seed": 1011,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 10,
+    "seed": 42,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 10,
+    "seed": 123,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 10,
+    "seed": 456,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 10,
+    "seed": 789,
+    "error": "Object of type ndarray is not JSON serializable"
+  },
+  {
+    "dataset_id": "SAV1_MOUSE",
+    "method": "ucb_tuned",
+    "k": 10,
+    "seed": 1011,
+    "error": "Object of type ndarray is not JSON serializable"
+  }
+]

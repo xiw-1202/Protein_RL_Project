@@ -1,0 +1,15 @@
+{
+  "method": "sa",
+  "k": 3,
+  "best_sequence": "GEDLPLPPGWSVAWTMRGRKYYIDHNTNTTHWSHPLESGPSSG",
+  "best_fitness": -78.77145318407565,
+  "wt_fitness": -78.77145318407565,
+  "improvement": 0.0,
+  "queries_used": 300,
+  "dataset_id": "SAV1_MOUSE_Tsuboyama_2023_2YSB",
+  "seed": 789,
+  "budget": 300,
+  "model_name": "esm2_t33_650M_UR50D",
+  "runtime": 384.9403247833252,
+  "timestamp": "2025-12-11T23:03:06.734620"
+}

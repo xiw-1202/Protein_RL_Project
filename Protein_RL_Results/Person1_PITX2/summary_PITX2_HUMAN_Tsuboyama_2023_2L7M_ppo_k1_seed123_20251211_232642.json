@@ -1,0 +1,17 @@
+{
+  "method": "ppo",
+  "k": 1,
+  "best_sequence": "MKFTQQQLQVLENEFQRNPYPDQQTRQHIADLVNLDEKRVMVWFKNRRAKYK",
+  "best_fitness": -63.65925882104784,
+  "wt_fitness": -97.3342846930027,
+  "improvement": 33.67502587195486,
+  "queries_used": 300,
+  "improvements": 29,
+  "updates": 9,
+  "dataset_id": "PITX2_HUMAN_Tsuboyama_2023_2L7M",
+  "seed": 123,
+  "budget": 300,
+  "model_name": "esm2_t12_35M_UR50D",
+  "runtime": 179.90992498397827,
+  "timestamp": "2025-12-11T23:26:42.233391"
+}

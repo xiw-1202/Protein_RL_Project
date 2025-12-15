@@ -1,0 +1,11 @@
+{
+  "method": "ucb1",
+  "k": 10,
+  "best_sequence": "GEDLPLPPGSVDAEWDGRKYYIDHNTNTTHWSHPVVGAQRGG",
+  "best_fitness": -80.6569796204567,
+  "wt_fitness": -87.4995311461389,
+  "improvement": 6.842551525682211,
+  "queries_used": 300,
+  "improvements": 3,
+  "ucb_stats": {
+    "ucb_scores": 

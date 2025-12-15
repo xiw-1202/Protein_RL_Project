@@ -1,0 +1,16 @@
+{
+  "method": "bandit",
+  "k": 1,
+  "best_sequence": "VKFTSQQLQELETHFQVNAYPDAQTRKEIAAKTGLTEKQVAVWFKNRRAKNR",
+  "best_fitness": -65.35943808592856,
+  "wt_fitness": -97.3342846930027,
+  "improvement": 31.97484660707414,
+  "queries_used": 300,
+  "improvements": 31,
+  "dataset_id": "PITX2_HUMAN_Tsuboyama_2023_2L7M",
+  "seed": 1011,
+  "budget": 300,
+  "model_name": "esm2_t12_35M_UR50D",
+  "runtime": 180.5624930858612,
+  "timestamp": "2025-12-11T23:20:34.185414"
+}

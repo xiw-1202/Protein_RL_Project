@@ -1,5 +1,17 @@
 """
-Project configuration
+Project Configuration for Protein RL Optimization
+
+This module centralizes all experiment settings including:
+- ESM-2 model selection (small vs large)
+- Experiment parameters (budget, k-values, seeds)
+- Dataset paths
+- Baseline method configuration
+- Output directories
+
+Usage:
+    from config import EXPERIMENT_CONFIG, get_model_name
+    model_name = get_model_name()
+    budget = EXPERIMENT_CONFIG['budget']
 """
 
 # Model settings

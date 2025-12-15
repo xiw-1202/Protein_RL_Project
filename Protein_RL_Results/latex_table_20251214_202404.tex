@@ -1,0 +1,18 @@
+\begin{table}[h]
+\centering
+\caption{Performance Comparison on SAV1\_MOUSE (k=1)}
+\label{tab:improved_methods}
+\begin{tabular}{llcc}
+\hline
+Method & Category & Mean Improvement & Std Dev \\
+\hline
+RANDOM & Baseline & 18.89 & 4.70 \\
+SA & Baseline & 0.61 & 0.96 \\
+BANDIT & Original RL & 30.07 & 4.68 \\
+PPO v1 & Original RL & 26.45 & 2.80 \\
+PPO v2 & Improved RL & 10.25 & 2.59 \\
+UCB1 & Improved RL & 30.29 & 9.57 \\
+UCB-Tuned & Improved RL & 28.30 & 2.94 \\
+\hline
+\end{tabular}
+\end{table}
